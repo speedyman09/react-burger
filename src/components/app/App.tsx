@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import styles from "./styles.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import { ingredientsApiUrl } from "../../vars/vars";
+import { IngredientsApiUrl } from "../../vars/vars";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 const selectedIngredientIds = [
   "60d3b41abdacab0026a733c6",
@@ -20,7 +20,7 @@ function App() {
     const getIngredients = async () => {
       try {
         setLoading(true);
-        const response = await fetch(ingredientsApiUrl);
+        const response = await fetch(IngredientsApiUrl);
 
         if (!response.ok)
           throw new Error(
