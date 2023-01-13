@@ -1,0 +1,12 @@
+.card {
+    cursor: pointer;
+  }
+  .card p {
+    text-align: center;
+  }
+  .price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
