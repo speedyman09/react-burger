@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import styles from "./styles.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import { IngredientsApiUrl } from "../../vars/vars";
+import { ingredientsApiUrl } from "../../vars/vars";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 const selectedIngredientIds = [
   "60d3b41abdacab0026a733c6",
@@ -20,7 +20,7 @@ function App() {
     const getIngredients = async () => {
       try {
         setLoading(true);
-        const response = await fetch(IngredientsApiUrl);
+        const response = await fetch(ingredientsApiUrl);
 
         if (!response.ok)
           throw new Error(
@@ -39,9 +39,9 @@ function App() {
     getIngredients();
   }, []);
   const selectedIngredients = useMemo(() => {
-    return ingredients.filter((item) =>
-    selectedIngredientIds.includes(item['_id'])
-    // console.log(item['_id'])
+    return ingredients.filter(
+      (item) => selectedIngredientIds.includes(item["_id"])
+      // console.log(item['_id'])
     );
   }, [ingredients]);
   return (
