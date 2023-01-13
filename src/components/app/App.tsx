@@ -4,13 +4,14 @@ import styles from "./styles.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import { ingredientsApiUrl } from "../../vars/vars";
-
-// const selectedIngredientIds = [
-//   "60666c42cc7b410027a1a9b1",
-//   "60666c42cc7b410027a1a9b4",
-//   "60666c42cc7b410027a1a9b9",
-//   "60666c42cc7b410027a1a9bc",
-// ];
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+const selectedIngredientIds = [
+  "60d3b41abdacab0026a733c6",
+  "60d3b41abdacab0026a733d4",
+  "60d3b41abdacab0026a733c9",
+  "60d3b41abdacab0026a733d3",
+  "60d3b41abdacab0026a733cc",
+];
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
@@ -37,11 +38,12 @@ function App() {
 
     getIngredients();
   }, []);
-  // const selectedIngredients = useMemo(() => {
-  //   return ingredients.filter((item) =>
-  //   selectedIngredientIds.includes(item._id)
-  //   );
-  // }, [ingredients]);
+  const selectedIngredients = useMemo(() => {
+    return ingredients.filter((item) =>
+    selectedIngredientIds.includes(item['_id'])
+    // console.log(item['_id'])
+    );
+  }, [ingredients]);
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -51,7 +53,7 @@ function App() {
         ) : (
           <>
             <BurgerIngredients data={ingredients} />
-            
+            <BurgerConstructor data={selectedIngredients} />
           </>
         )}
       </main>
