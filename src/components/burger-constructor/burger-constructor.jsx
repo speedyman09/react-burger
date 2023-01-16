@@ -9,7 +9,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "./order-details/order-details";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
-import IngredientType from "../types/ingredient-type";
+import IngredientType from "../../types/ingredient-type";
 
 function BurgerConstructor({ data }) {
     const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -29,6 +29,7 @@ function BurgerConstructor({ data }) {
                     isLocked
                     price={bun.price}
                     thumbnail={bun.image}
+                    type="top"
                   />
                 </div>
                 <div className={`${styles.scrollable} custom-scroll`}>
@@ -57,6 +58,7 @@ function BurgerConstructor({ data }) {
                     isLocked
                     price={bun.price}
                     thumbnail={bun.image}
+                    type="bottom"
                   />
                 </div>
               </>

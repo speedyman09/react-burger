@@ -3,7 +3,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import Modal from "../../modal/modal";
 import IngredientInfo from "../ingredient-info/ingredient-info";
 import styles from "./styles.module.css";
-import IngredientType from "../../types/ingredient-type";
+import IngredientType from "../../../types/ingredient-type";
 
 function Ingredient({ data }) {
   const [modalIsVisible, setModalIsVisible] = useState(false);

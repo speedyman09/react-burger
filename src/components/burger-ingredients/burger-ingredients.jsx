@@ -3,7 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredient from "./ingredient/ingredient";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
-import IngredientType from "../types/ingredient-type";
+import IngredientType from "../../types/ingredient-type";
 
 const typesTitleMap = {
     bun: "Булки",

@@ -29,10 +29,12 @@ function App() {
 
         const ingredients = await response.json();
         setIngredients(ingredients.data);
-        setLoading(false);
+        // setLoading(false);
       } catch (err) {
-        setLoading(false);
+        // setLoading(false);
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
