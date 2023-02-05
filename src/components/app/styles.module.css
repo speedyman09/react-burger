@@ -1,0 +1,13 @@
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  margin: 0 auto;
+  max-width: 1240px;
+  min-height: 0;
+  display: flex;
+  
+}
