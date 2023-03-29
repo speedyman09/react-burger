@@ -1,11 +1,15 @@
 import styles from "./styles.module.css";
 import done from "../../../images/done.png";
+import PropTypes from 'prop-types';
 
-function OrderDetails() {
+function OrderDetails({orderId}) {
+  OrderDetails.propTypes = {
+    orderId: PropTypes.number.isRequired
+  }
   return (
     <>
       <h1 className={`${styles.number} text text_type_digits-large mt-4 mb-8`}>
-        {Math.floor(Math.random() * 1000000)}
+        {orderId}
       </h1>
       <p className="text text_type_main-medium">Идентификатор заказа</p>
       <img src={done} alt="done" className="mt-15 mb-15" />

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useContext} from "react";
 import {
   ConstructorElement,
   Button,
@@ -10,9 +10,44 @@ import OrderDetails from "./order-details/order-details";
 import styles from "./styles.module.css";
 import PropTypes from "prop-types";
 import IngredientType from "../../types/ingredient-type";
+import { IngredientContext } from "../../context/IngredientContext";
 
-function BurgerConstructor({ data }) {
+
+
+
+
+
+
+function BurgerConstructor() {
+    
+    const data = useContext(IngredientContext);
+
     const [modalIsVisible, setModalIsVisible] = useState(false);
+    const [responseNumber, setResponseNumber] = useState();
+    const handleOrderDetails = () => {
+      const url = "https://norma.nomoreparties.space/api/orders";
+      const ingredientsArray = data.map((item) => item._id);
+      console.log({ingredients: ingredientsArray});
+      // console.log(
+      //   {
+      //     "ingredients": data.map((item) => item._id)
+      //   }
+      //   );
+      setModalIsVisible(true);
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ ingredients: ingredientsArray }),
+        headers: {
+          "Content-Type": "application/json",
+          
+        },
+      })
+      .then((response) => response.json())
+      .then((response) => setResponseNumber(response.order.number))
+      .catch((error) => console.log(error));
+      
+    }
+    
     const bun = data.find((item) => item.type === "bun");
     const totalPrice = useMemo(() => {
       return data.reduce((total, item) => total + item.price, 0);
@@ -76,7 +111,7 @@ function BurgerConstructor({ data }) {
               type="primary"
               size="large"
               onClick={() => {
-                setModalIsVisible(true);
+                handleOrderDetails()
               }}
             >
               Оформить заказ
@@ -89,15 +124,15 @@ function BurgerConstructor({ data }) {
               setModalIsVisible(false);
             }}
           >
-            <OrderDetails />
+            <OrderDetails orderId={responseNumber}/>
           </Modal>
         )}
       </>
     );
   }
   
-  BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(IngredientType).isRequired,
-  };
+  // BurgerConstructor.propTypes = {
+  //   data: PropTypes.arrayOf(IngredientType).isRequired,
+  // };
   
   export default BurgerConstructor;

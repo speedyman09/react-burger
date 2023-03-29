@@ -5,6 +5,7 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import { ingredientsApiUrl } from "../../vars/vars";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { IngredientContext } from "../../context/IngredientContext";
 const selectedIngredientIds = [
   "60d3b41abdacab0026a733c6",
   "60d3b41abdacab0026a733d4",
@@ -44,8 +45,10 @@ function App() {
     return ingredients.filter(
       (item) => selectedIngredientIds.includes(item["_id"])
       // console.log(item['_id'])
+      
     );
   }, [ingredients]);
+
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -53,10 +56,10 @@ function App() {
         {loading ? (
           <span>Загружаем ингредиенты...</span>
         ) : (
-          <>
+          <IngredientContext.Provider value={selectedIngredients}>
             <BurgerIngredients data={ingredients} />
-            <BurgerConstructor data={selectedIngredients} />
-          </>
+            <BurgerConstructor/>
+          </IngredientContext.Provider>
         )}
       </main>
     </div>
