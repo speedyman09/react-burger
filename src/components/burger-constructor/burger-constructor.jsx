@@ -20,11 +20,6 @@ function BurgerConstructor() {
     const url = `${BASE_URL}/orders`;
     const ingredientsArray = data.map((item) => item._id);
     console.log({ ingredients: ingredientsArray });
-    // console.log(
-    //   {
-    //     "ingredients": data.map((item) => item._id)
-    //   }
-    //   );
     setModalIsVisible(true);
     fetch(url, {
       method: "POST",
