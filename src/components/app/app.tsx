@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import styles from "./styles.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import { ingredientsApiUrl } from "../../vars/vars";
+import { BASE_URL } from "../../vars/vars";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { IngredientContext } from "../../context/IngredientContext";
 const selectedIngredientIds = [
@@ -21,7 +21,7 @@ function App() {
     const getIngredients = async () => {
       try {
         setLoading(true);
-        const response = await fetch(ingredientsApiUrl);
+        const response = await fetch(`${BASE_URL}/ingredients`);
 
         if (!response.ok)
           throw new Error(
@@ -45,7 +45,6 @@ function App() {
     return ingredients.filter(
       (item) => selectedIngredientIds.includes(item["_id"])
       // console.log(item['_id'])
-      
     );
   }, [ingredients]);
 
@@ -58,7 +57,7 @@ function App() {
         ) : (
           <IngredientContext.Provider value={selectedIngredients}>
             <BurgerIngredients data={ingredients} />
-            <BurgerConstructor/>
+            <BurgerConstructor />
           </IngredientContext.Provider>
         )}
       </main>
