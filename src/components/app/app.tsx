@@ -3,8 +3,9 @@ import { useState, useEffect, useMemo } from "react";
 import styles from "./styles.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import { ingredientsApiUrl } from "../../vars/vars";
+import { BASE_URL } from "../../vars/vars";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { IngredientContext } from "../../context/IngredientContext";
 const selectedIngredientIds = [
   "60d3b41abdacab0026a733c6",
   "60d3b41abdacab0026a733d4",
@@ -20,7 +21,7 @@ function App() {
     const getIngredients = async () => {
       try {
         setLoading(true);
-        const response = await fetch(ingredientsApiUrl);
+        const response = await fetch(`${BASE_URL}/ingredients`);
 
         if (!response.ok)
           throw new Error(
@@ -46,6 +47,7 @@ function App() {
       // console.log(item['_id'])
     );
   }, [ingredients]);
+
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -53,10 +55,10 @@ function App() {
         {loading ? (
           <span>Загружаем ингредиенты...</span>
         ) : (
-          <>
+          <IngredientContext.Provider value={selectedIngredients}>
             <BurgerIngredients data={ingredients} />
-            <BurgerConstructor data={selectedIngredients} />
-          </>
+            <BurgerConstructor />
+          </IngredientContext.Provider>
         )}
       </main>
     </div>
