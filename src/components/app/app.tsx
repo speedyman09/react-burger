@@ -7,7 +7,7 @@ import { BASE_URL } from "../../vars/vars";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { IngredientContext } from "../../context/IngredientContext";
 import { createStore } from "redux";
-import { rootReducer } from "../../services/rootReducer";
+import { rootReducer } from "../../services/reducers/rootReducer";
 let store = createStore(rootReducer);
 const selectedIngredientIds = [
   "60d3b41abdacab0026a733c6",
