@@ -7,4 +7,4 @@ It allows you to build your own space burger.
 <li>Css</li>
 <li>Create React App (CRA)</li>
 
-## Sprint 7
+## Sprint 8

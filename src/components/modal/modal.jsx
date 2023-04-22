@@ -1,57 +1,39 @@
-import ReactDOM from "react-dom";
 import { useEffect } from "react";
+import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import ModalOverlay from "./modal-overlay/modal-overlay";
-import styles from "./styles.module.css";
-import PropTypes from "prop-types";
-
-const modalRoot = document.getElementById("modal");
-
-function Modal({ title, children, onClose }) {
+import ModalOverlay from "./ModalOverlay/ModalOverlay";
+import styles from './Modal.module.css'
+import PropTypes from 'prop-types';
+const Modal = ({ title, children, closePopup }) => {
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        onClose();
+    const handleEscClose = (evt) => {
+      if (evt.key === 'Escape') {
+        closePopup()
       }
-    };
-    document.addEventListener("keydown", handleKeyDown, false);
+    }
+    document.addEventListener('keydown', handleEscClose);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown, false);
-    };
-  }, [onClose]);
-
+      document.removeEventListener('keydown', handleEscClose); 
+    }
+  }, [closePopup])
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={onClose} />
-      <div
-        className={`${styles.modal} p-10`}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <header className={`${styles.header} pt-4 pb-4`}>
-          <h1 className={`${styles.title} text text_type_main-large pr-5`}>
-            {title}
-          </h1>
-          <div className={styles.close}>
-            <CloseIcon onClick={onClose} />
-          </div>
-        </header>
-        <section className={`${styles.body} pl-15 pr-15 pb-4`}>
-          {children}
-        </section>
+      <div className={styles.modal}>
+        <h3 className='pl-10 pt-10 text text_color_primary text_type_main-large'>{title}</h3>
+        <span className={styles.close} onClick={closePopup}>
+          <CloseIcon type='primary' />
+        </span>
+        {children}
       </div>
-    </>,
-    modalRoot
-  );
+      <ModalOverlay closePopup={closePopup}/>
+    </> ,
+    document.getElementById('modal-root')
+  )
+}
+Modal.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.object.isRequired,
+  closePopup: PropTypes.func.isRequired
 }
 
-Modal.propTypes = {
-  title: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 export default Modal;
