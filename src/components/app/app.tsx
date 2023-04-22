@@ -6,18 +6,28 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import { BASE_URL } from "../../vars/vars";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { IngredientContext } from "../../context/IngredientContext";
-import { createStore } from "redux";
+import { applyMiddleware, createStore} from "redux";
+import { Provider, useSelector} from "react-redux";
 import { rootReducer } from "../../services/reducers/rootReducer";
-let store = createStore(rootReducer);
+import { getIngredients } from "../../services/actions/burger-ingredients";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+
+
+const store = createStore(rootReducer, composeWithDevTools (
+  applyMiddleware (thunk),
+));
+;
 const selectedIngredientIds = [
-  "60d3b41abdacab0026a733c6",
-  "60d3b41abdacab0026a733d4",
-  "60d3b41abdacab0026a733c9",
-  "60d3b41abdacab0026a733d3",
-  "60d3b41abdacab0026a733cc",
+  "643d69a5c3f7b9001cfa093c",
+  "643d69a5c3f7b9001cfa093f",
+  "643d69a5c3f7b9001cfa0946",
 ];
 
 function App() {
+  getIngredients();
+  // const redIngredients = useSelector(state => state.ingredients);
+
   const [ingredients, setIngredients] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -51,7 +61,9 @@ function App() {
     );
   }, [ingredients]);
 
+
   return (
+    <Provider store={store}>
     <div className={styles.app}>
       <AppHeader />
       <main className={`${styles.main} p-5`}>
@@ -65,6 +77,7 @@ function App() {
         )}
       </main>
     </div>
+   </Provider>
   );
 }
 
