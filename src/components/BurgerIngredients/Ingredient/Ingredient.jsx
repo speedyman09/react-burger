@@ -48,7 +48,7 @@ function Ingredient({ ingredient }) {
 }
 
 Ingredient.propTypes = { 
-  ingredient: IngredientPropTypes
+  ingredient: IngredientPropTypes.isRequired
 }
 
 export default Ingredient;
