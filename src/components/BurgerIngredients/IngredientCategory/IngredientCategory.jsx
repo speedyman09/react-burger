@@ -4,7 +4,6 @@ import { forwardRef } from 'react';
 
 const IngredientCategory = forwardRef((
   { category, heading, listStyle, textStyle }, ref) => {
-
   return (
     <div ref={ref}>
       <h3 className={textStyle}>{heading}</h3>
@@ -24,9 +23,19 @@ const IngredientCategory = forwardRef((
   )
 })
 
-
 IngredientCategory.propTypes = {
-  category: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  category: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      proteins: PropTypes.number.isRequired,
+      calories: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      price: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   heading: PropTypes.string.isRequired,
   listStyle: PropTypes.string.isRequired,
   textStyle: PropTypes.string.isRequired

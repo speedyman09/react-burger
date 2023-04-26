@@ -43,7 +43,10 @@ export const getIngredientsData = () => {
         }
       })
       .catch(e => {
-        console.log(`Ошибка ${e.message}`)
+        dispatch({
+          type: GET_INGREDIENTS_FAILED,
+          payload: e.message
+        });
       })
   }
 }
