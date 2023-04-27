@@ -1,5 +1,4 @@
 import styles from './BurgerConstructor.module.css';
-import PropTypes from 'prop-types';
 import { TopBun } from './TopBun/TopBun';
 import { BottomBun } from './BottomBun/BottomBun';
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/button";
@@ -15,7 +14,7 @@ import { SelectedIngredient } from "./SelectedIngredient/SelectedIngredient";
 import Modal from '../Modal/modal.jsx';
 import OrderDetails from '../Modal/OrderDetails/OrderDetails';
 
-function BurgerConstructor({ closePopup }) {
+function BurgerConstructor() {
   const dispatch = useDispatch();
 
   const burgerData = useSelector(state => state.ingredients.ingredients);
@@ -85,7 +84,7 @@ function BurgerConstructor({ closePopup }) {
         </div>
       }
       {isOrderModalOpen && orderDetails && (
-        <Modal title={''} closePopup={closePopup}>
+        <Modal title={''}>
           <OrderDetails />
         </Modal>
       )}
@@ -93,9 +92,5 @@ function BurgerConstructor({ closePopup }) {
 
   )
 };
-
-BurgerConstructor.propTypes = {
-  closePopup: PropTypes.func.isRequired
-}
 
 export default BurgerConstructor;

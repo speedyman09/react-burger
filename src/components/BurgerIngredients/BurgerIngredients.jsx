@@ -1,5 +1,4 @@
 import styles from './BurgerIngredients.module.css';
-import PropTypes from 'prop-types';
 import IngredientCategory from './IngredientCategory/IngredientCategory';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import { useMemo, useRef, useState } from 'react';
@@ -8,7 +7,7 @@ import IngredientDetails from '../Modal/IngredientDetails/IngredientDetails.jsx'
 import Modal from '../Modal/modal.jsx';
 
 
-function BurgerIngredients({ closePopup }) {
+function BurgerIngredients() {
 	const isIngredientModalOpen = useSelector(state => state.ingredients.isIngredientModalOpen);
 	const burgerData = useSelector(state => state.ingredients.ingredients);
 
@@ -37,6 +36,9 @@ function BurgerIngredients({ closePopup }) {
 			case 'mains': {
 				mainRef.current.scrollIntoView({ block: 'end', behavior: 'smooth' });
 				break;
+			}
+			default: {
+				console.log("Something broke!");
 			}
 		}
 	};
@@ -84,17 +86,13 @@ function BurgerIngredients({ closePopup }) {
 				</div>
 			</div>
 			{isIngredientModalOpen && (
-				<Modal title={'Детали ингредиента'} closePopup={closePopup}>
+				<Modal title={'Детали ингредиента'}>
 					<IngredientDetails />
 				</Modal>
 			)}
 		</section>
 	)
 };
-
-BurgerIngredients.propTypes = {
-  closePopup: PropTypes.func.isRequired
-}
 
 
 export default BurgerIngredients;
