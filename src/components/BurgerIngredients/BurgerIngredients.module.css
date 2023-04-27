@@ -1,37 +1,37 @@
 .ingredients {
-	box-sizing: border-box;
-	width: 600px;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
+  box-sizing: border-box;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .wrapper {
-	margin: 0 auto;
-	height: 756px;
+  margin: 0 auto;
+  height: 756px;
 }
 
 .scroll {
-	overflow-y: scroll;
-	height: 660px;
+  overflow-y: scroll;
+  height: 660px;
 }
 
 .tabs {
-	display: flex;
-	flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .list {
-	margin: 0;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	row-gap: 32px;
-	column-gap: 24px;
-	list-style-type: none;
-	cursor: pointer;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 32px;
+  column-gap: 24px;
+  list-style-type: none;
+  cursor: pointer;
 }
 
 .disabled {
-	filter: grayscale(100);
-	cursor: not-allowed;
+  filter: grayscale(100);
+  cursor: not-allowed;
 }

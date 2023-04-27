@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-export const BURGER_API_URL = 'https://norma.nomoreparties.space/api';
+export const BURGER_API_URL = "https://norma.nomoreparties.space/api";
 export const IngredientPropTypes = PropTypes.shape({
   calories: PropTypes.number,
   carbohydrates: PropTypes.number,
@@ -13,6 +13,4 @@ export const IngredientPropTypes = PropTypes.shape({
   proteins: PropTypes.number,
   type: PropTypes.string,
   _id: PropTypes.string,
-})
-
-
+});

@@ -1,31 +1,34 @@
-import styles from './SelectedIngredient.module.css';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDrag, useDrop } from "react-dnd";
-import { useRef } from 'react';
+import styles from "./SelectedIngredient.module.css";
+import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
 import {
-  DELETE_INGREDIENT
-} from '../../../services/actions/ingredients';
-import { IngredientPropTypes } from '../../../constants/constants';
+  DragIcon,
+  ConstructorElement,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDrag, useDrop } from "react-dnd";
+import { useRef } from "react";
+import { DELETE_INGREDIENT } from "../../../services/actions/ingredients";
+import { IngredientPropTypes } from "../../../constants/constants";
 
 function SelectedIngredient({ ingredient, index, moveIngredient }) {
   const dispatch = useDispatch();
   const { image, name, price, _id } = ingredient;
-  const selectedIngredients = useSelector(state => state.ingredients.selectedIngredients);
+  const selectedIngredients = useSelector(
+    (state) => state.ingredients.selectedIngredients
+  );
 
   const handleDeleteIngredient = (item) => {
-    const selectedIndex = selectedIngredients.indexOf(item)
+    const selectedIndex = selectedIngredients.indexOf(item);
     const newIngredientsArray = selectedIngredients.slice();
     newIngredientsArray.splice(selectedIndex, 1);
     dispatch({
       type: DELETE_INGREDIENT,
-      payload: newIngredientsArray
+      payload: newIngredientsArray,
     });
   };
 
   const [{ isDragging }, dragRef] = useDrag({
-    type: 'selected',
+    type: "selected",
     item: ingredient,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -33,23 +36,24 @@ function SelectedIngredient({ ingredient, index, moveIngredient }) {
   });
 
   const [{ handlerId }, dropRef] = useDrop({
-    accept: 'selected',
+    accept: "selected",
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
-      }
+      };
     },
     hover: (item, monitor) => {
       if (!ref.current) {
-        return
+        return;
       }
       const dragIndex = item.index;
       const hoverIndex = index;
       if (dragIndex === hoverIndex) {
-        return
+        return;
       }
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
@@ -61,7 +65,7 @@ function SelectedIngredient({ ingredient, index, moveIngredient }) {
 
       moveIngredient(dragIndex, hoverIndex, selectedIngredients);
       item.index = hoverIndex;
-    }
+    },
   });
 
   const ref = useRef(null);
@@ -69,9 +73,14 @@ function SelectedIngredient({ ingredient, index, moveIngredient }) {
   const opacity = isDragging ? 0 : 1;
 
   return (
-    <li className={'mb-4 ml-4 mr-1 ' + styles.element} ref={dragDropRef} style={{ opacity }} data-handler-id={handlerId}>
+    <li
+      className={"mb-4 ml-4 mr-1 " + styles.element}
+      ref={dragDropRef}
+      style={{ opacity }}
+      data-handler-id={handlerId}
+    >
       <DragIcon type="primary" />
-      <ConstructorElement 
+      <ConstructorElement
         text={name}
         thumbnail={image}
         price={price}
@@ -79,13 +88,13 @@ function SelectedIngredient({ ingredient, index, moveIngredient }) {
         index={index}
       />
     </li>
-  )
-};
+  );
+}
 
 SelectedIngredient.propTypes = {
   ingredient: IngredientPropTypes,
   index: PropTypes.number.isRequired,
-  moveIngredient: PropTypes.func.isRequired
-}
+  moveIngredient: PropTypes.func.isRequired,
+};
 
 export { SelectedIngredient };

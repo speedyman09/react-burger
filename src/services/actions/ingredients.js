@@ -1,23 +1,23 @@
-import { getIngredients } from '../../utils/burger-api.js';
+import { getIngredients } from "../../utils/burger-api.js";
 
-export const GET_INGREDIENTS = 'GET_INGREDIENTS';
-export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const OPEN_INGREDIENT_INFO = 'OPEN_INGREDIENT_INFO';
-export const SELECT_INGREDIENT = 'SELECT_INGREDIENT';
-export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
-export const SORT_INGREDIENTS = 'SET_INGREDIENTS';
-export const DELETE_ALL_INGREDIENTS = 'DELETE_ALL_INGREDIENTS';
-export const OPEN_INGREDIENTS_MODAL = 'OPEN_INGREDIENTS_MODAL';
+export const GET_INGREDIENTS = "GET_INGREDIENTS";
+export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
+export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
+export const OPEN_INGREDIENT_INFO = "OPEN_INGREDIENT_INFO";
+export const SELECT_INGREDIENT = "SELECT_INGREDIENT";
+export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
+export const SORT_INGREDIENTS = "SET_INGREDIENTS";
+export const DELETE_ALL_INGREDIENTS = "DELETE_ALL_INGREDIENTS";
+export const OPEN_INGREDIENTS_MODAL = "OPEN_INGREDIENTS_MODAL";
 
 export const deleteAllIngredients = () => {
   return function (dispatch) {
     dispatch({
       type: DELETE_ALL_INGREDIENTS,
-      payload: []
-    })
-  }
-}
+      payload: [],
+    });
+  };
+};
 
 export const sortIngredients = (dragIndex, hoverIndex, selectedIngredients) => {
   return function (dispatch) {
@@ -27,9 +27,9 @@ export const sortIngredients = (dragIndex, hoverIndex, selectedIngredients) => {
     sortedIngredients.splice(dragIndex, 1, hoverItem[0]);
     dispatch({
       type: SORT_INGREDIENTS,
-      payload: sortedIngredients
-    })
-  }
+      payload: sortedIngredients,
+    });
+  };
 };
 
 export const getIngredientsData = () => {
@@ -39,17 +39,20 @@ export const getIngredientsData = () => {
         if (res) {
           dispatch({
             type: GET_INGREDIENTS_SUCCESS,
-            payload: res.data
-          })
+            payload: res.data,
+          });
         }
       })
-      .catch(e => {
+      .catch((e) => {
         dispatch({
           type: GET_INGREDIENTS_FAILED,
-          payload: e.message
+          payload: e.message,
         });
-      })
-  }
-}
+      });
+  };
+};
 
-export const currentIngredient = (ingredient) => ({ type: OPEN_INGREDIENT_INFO, payload: ingredient });
+export const currentIngredient = (ingredient) => ({
+  type: OPEN_INGREDIENT_INFO,
+  payload: ingredient,
+});

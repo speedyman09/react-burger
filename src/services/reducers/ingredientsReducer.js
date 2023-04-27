@@ -1,23 +1,23 @@
 import {
-GET_INGREDIENTS,
-GET_INGREDIENTS_FAILED,
-GET_INGREDIENTS_SUCCESS,
-SELECT_INGREDIENT,
-DELETE_INGREDIENT,
-SORT_INGREDIENTS,
-OPEN_INGREDIENT_INFO,
-DELETE_ALL_INGREDIENTS,
-OPEN_INGREDIENTS_MODAL
-} from '../actions/ingredients';
+  GET_INGREDIENTS,
+  GET_INGREDIENTS_FAILED,
+  GET_INGREDIENTS_SUCCESS,
+  SELECT_INGREDIENT,
+  DELETE_INGREDIENT,
+  SORT_INGREDIENTS,
+  OPEN_INGREDIENT_INFO,
+  DELETE_ALL_INGREDIENTS,
+  OPEN_INGREDIENTS_MODAL,
+} from "../actions/ingredients";
 
 const initialState = {
-ingredients: [],
-selectedIngredients: [],
-currentIngredient: null,
-ingredientsRequest: false,
-ingredientsFailed: false,
-isElementDrag: false,
-isIngredientModalOpen: false,
+  ingredients: [],
+  selectedIngredients: [],
+  currentIngredient: null,
+  ingredientsRequest: false,
+  ingredientsFailed: false,
+  isElementDrag: false,
+  isIngredientModalOpen: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -26,8 +26,8 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsRequest: true,
-        ingredientsFailed: false
-      }
+        ingredientsFailed: false,
+      };
     }
     case GET_INGREDIENTS_FAILED: {
       return {
@@ -46,32 +46,32 @@ export const ingredientsReducer = (state = initialState, action) => {
     case OPEN_INGREDIENT_INFO: {
       return {
         ...state,
-        currentIngredient: action.payload
-      }
+        currentIngredient: action.payload,
+      };
     }
     case SELECT_INGREDIENT: {
       return {
         ...state,
-        selectedIngredients: action.payload
-      }
+        selectedIngredients: action.payload,
+      };
     }
     case DELETE_INGREDIENT: {
       return {
         ...state,
-        selectedIngredients: action.payload
-      }
+        selectedIngredients: action.payload,
+      };
     }
     case SORT_INGREDIENTS: {
       return {
         ...state,
-        selectedIngredients: action.payload
-      }
+        selectedIngredients: action.payload,
+      };
     }
     case DELETE_ALL_INGREDIENTS: {
       return {
         ...state,
-        selectedIngredients: action.payload
-      }
+        selectedIngredients: action.payload,
+      };
     }
     case OPEN_INGREDIENTS_MODAL: {
       return {
@@ -85,8 +85,7 @@ export const ingredientsReducer = (state = initialState, action) => {
   }
 };
 
-
 export const changeIngredientModalStatus = (status) => ({
-  type:  OPEN_INGREDIENTS_MODAL,
-  payload: status
+  type: OPEN_INGREDIENTS_MODAL,
+  payload: status,
 });
