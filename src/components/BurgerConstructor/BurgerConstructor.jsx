@@ -7,7 +7,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { setOrderData } from "../../services/actions/order";
 import { SELECT_INGREDIENT, sortIngredients } from '../../services/actions/ingredients';
 import { useMemo, useCallback } from "react";
-import { changeOrderModalStatus } from "../../services/actions/modal";
+import { changeOrderModalStatus } from '../../services/reducers/orderReducer';
 import { deleteAllIngredients } from '../../services/actions/ingredients';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from "react-dnd";
@@ -25,13 +25,13 @@ function BurgerConstructor({ closePopup }) {
   const bun = useMemo(() => selectedIngredients.find((ingredient) => ingredient.type === 'bun'), [selectedIngredients]);
 
   const orderDetails = useSelector(state => state.orderData.orderDetails);
-  const isOrderModalOpen = useSelector(state => state.modalState.isOrderDetailsModalOpen);
+  const isOrderModalOpen = useSelector(state => state.orderData.isOrderDetailsModalOpen);
 
   const sum = useMemo(() => {
     return selectedIngredients.reduce(
       (acc, ingredient) =>
         ingredient === bun ? acc + ingredient.price * 2 : acc + ingredient.price, 0);
-  }, [selectedIngredients]);
+  }, [selectedIngredients, bun]);
   
   const onOrderClick = () => {
     const dataId = selectedIngredients.map((element) => element._id);
@@ -60,7 +60,7 @@ function BurgerConstructor({ closePopup }) {
  
   const moveIngredients = useCallback((dragIndex, hoverIndex, selectedIngredients) => {
     dispatch(sortIngredients(dragIndex, hoverIndex, selectedIngredients));
-  }, [selectedIngredients, dispatch]);
+  }, [dispatch]);
 
   return (
     <section className={`${styles.section} ${isHover && styles.dropping}`} ref={dropRef}>

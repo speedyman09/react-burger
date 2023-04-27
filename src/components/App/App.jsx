@@ -7,10 +7,12 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getIngredientsData } from '../../services/actions/ingredients';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeIngredientModalStatus, changeOrderModalStatus } from '../../services/actions/modal.js';
+import { changeIngredientModalStatus } from '../../services/reducers/ingredientsReducer';
+import { changeOrderModalStatus } from '../../services/reducers/orderReducer';
+
 function App() {
   const dispatch = useDispatch();
-   const isOrderModalOpen = useSelector(state => state.modalState.isOrderDetailsModalOpen);
+   const isOrderModalOpen = useSelector(state => state.orderData.isOrderModalOpen);
   React.useEffect(() => {
     dispatch(getIngredientsData())
   }, [dispatch]);

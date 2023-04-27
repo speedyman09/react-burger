@@ -1,10 +1,10 @@
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/counter";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons";
 import { useDrag } from "react-dnd";
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import styles from './Ingredient.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeIngredientModalStatus } from "../../../services/actions/modal";
+import { changeIngredientModalStatus } from "../../../services/reducers/ingredientsReducer";
 import { currentIngredient } from "../../../services/actions/ingredients";
 import { IngredientPropTypes } from "../../../constants/constants";
 

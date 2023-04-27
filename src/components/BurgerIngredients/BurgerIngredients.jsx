@@ -9,7 +9,7 @@ import Modal from '../Modal/modal.jsx';
 
 
 function BurgerIngredients({ closePopup }) {
-	const isIngredientModalOpen = useSelector(state => state.modalState.isIngredientModalOpen);
+	const isIngredientModalOpen = useSelector(state => state.ingredients.isIngredientModalOpen);
 	const burgerData = useSelector(state => state.ingredients.ingredients);
 
 	const buns = useMemo(() => burgerData.filter((item) => item.type === 'bun'), [burgerData]);

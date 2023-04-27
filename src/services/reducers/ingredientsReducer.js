@@ -6,7 +6,8 @@ SELECT_INGREDIENT,
 DELETE_INGREDIENT,
 SORT_INGREDIENTS,
 OPEN_INGREDIENT_INFO,
-DELETE_ALL_INGREDIENTS
+DELETE_ALL_INGREDIENTS,
+OPEN_INGREDIENTS_MODAL
 } from '../actions/ingredients';
 
 const initialState = {
@@ -15,7 +16,8 @@ selectedIngredients: [],
 currentIngredient: null,
 ingredientsRequest: false,
 ingredientsFailed: false,
-isElementDrag: false
+isElementDrag: false,
+isIngredientModalOpen: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -71,8 +73,20 @@ export const ingredientsReducer = (state = initialState, action) => {
         selectedIngredients: action.payload
       }
     }
+    case OPEN_INGREDIENTS_MODAL: {
+      return {
+        ...state,
+        isIngredientModalOpen: action.payload,
+      };
+    }
     default: {
       return state;
     }
   }
 };
+
+
+export const changeIngredientModalStatus = (status) => ({
+  type:  OPEN_INGREDIENTS_MODAL,
+  payload: status
+});

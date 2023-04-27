@@ -4,6 +4,7 @@ export const SET_ORDER_DETAILS = 'SET_ORDER_DETAILS';
 export const SET_ORDER_DETAILS_FAILED = 'SET_ORDER_DETAILS_FAILED';
 export const SET_ORDER_DETAILS_SUCCESS = 'SET_ORDER_DETAILS_SUCCESS';
 export const CLEAR_ORDER_DETAILS = 'CLEAR_ORDER_DETAILS';
+export const OPEN_ORDER_DETAILS_MODAL = 'OPEN_ORDER_DETAILS_MODAL';
 
 export const setOrderDetails = () => ({ type: SET_ORDER_DETAILS });
 export const setOrderDetailsSuccess = (res) => ({ type: SET_ORDER_DETAILS_SUCCESS, payload: res });

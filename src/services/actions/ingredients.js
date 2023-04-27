@@ -8,6 +8,7 @@ export const SELECT_INGREDIENT = 'SELECT_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 export const SORT_INGREDIENTS = 'SET_INGREDIENTS';
 export const DELETE_ALL_INGREDIENTS = 'DELETE_ALL_INGREDIENTS';
+export const OPEN_INGREDIENTS_MODAL = 'OPEN_INGREDIENTS_MODAL';
 
 export const deleteAllIngredients = () => {
   return function (dispatch) {

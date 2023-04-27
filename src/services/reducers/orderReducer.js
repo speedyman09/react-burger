@@ -2,14 +2,17 @@ import {
   SET_ORDER_DETAILS_SUCCESS,
   SET_ORDER_DETAILS,
   SET_ORDER_DETAILS_FAILED,
-  // CLEAR_ORDER_DETAILS
+  OPEN_ORDER_DETAILS_MODAL
+   
 } from '../actions/order';
 
 const initialState = {
   // selectedIngredients: [],
   orderDetails: null,
   orderRequest: false,
-  orderFailed: false
+  orderFailed: false,
+  isOrderDetailsModalOpen: false,
+
 };
 
 export const orderReducer = (state = initialState, action) => {
@@ -36,14 +39,20 @@ export const orderReducer = (state = initialState, action) => {
         orderDetails: action.payload
       }
     }
-    // case CLEAR_ORDER_DETAILS: {
-    //   return {
-    //     ...state,
-    //     orderDetails: null
-    //   }
-    // }
+    case OPEN_ORDER_DETAILS_MODAL: {
+      return {
+        ...state,
+        isOrderDetailsModalOpen: action.payload,
+      };
+    }
+    
     default: {
       return state;
     }
   }
 };
+
+export const changeOrderModalStatus = (status) => ({
+  type:  OPEN_ORDER_DETAILS_MODAL,
+  payload: status
+});
