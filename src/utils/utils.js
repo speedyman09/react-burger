@@ -17,6 +17,9 @@ export const placeOrderRequest = async (cart) => {
 }
 
 export const userRequest = () => {
+    if (getCookie('accessToken') === undefined) {
+        throw new Error;
+    }
     return onRefreshToken(`${BASE_URL}/auth/user`, {
         headers: {
             Authorization: 'Bearer ' + getCookie('accessToken'),

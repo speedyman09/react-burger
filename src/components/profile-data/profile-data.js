@@ -18,7 +18,7 @@ export const ProfileData = () => {
 
     const { values, handleChange, isFormEdited, handleResetForm, handleUpdateUser } = useForm(userData);
 
-    const isActive = isFormEdited && (values.name.length ? true : false) && (values.password.length > 5 ? true : false)
+    const isActive = isFormEdited && values.name.length > 0 && (values.password.length === 0 || values.password.length > 5)
 
     useEffect(() => {
         handleResetForm()
