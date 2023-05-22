@@ -22,7 +22,7 @@ export const userRequest = () => {
     }
     return onRefreshToken(`${BASE_URL}/auth/user`, {
         headers: {
-            Authorization: 'Bearer ' + getCookie('accessToken'),
+            authorization: 'Bearer ' + getCookie('accessToken'),
         },
     })
 }
@@ -131,7 +131,7 @@ export const editRequest = async ({ email, name, password }) => {
         credentials: 'same-origin',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
-            Authorization: 'Bearer ' + getCookie('accessToken')
+            authorization: 'Bearer ' + getCookie('accessToken')
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',

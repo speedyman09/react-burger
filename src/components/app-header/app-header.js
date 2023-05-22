@@ -24,8 +24,8 @@ function AppHeader() {
                     <Logo />
                 </Link>
                 <NavLink to='/profile' className={`pl-5 pr-5 pt-4 pb-4 mt-4 mb-4 ${appHeaderStyles.header__button}`} activeClassName={appHeaderStyles.active}>
-                    <ProfileIcon type={pathname === '/profile' ? "primary" : "secondary"} />
-                    <p className={`text text_type_main-default ml-2`} style={pathname !== '/profile' ? { color: '#8585AD' } : null}>{store.user.userData.name ? store.user.userData.name : 'Личный кабинет'} </p>
+                    <ProfileIcon type={ /^\/profile/.test(pathname) ? "primary" : "secondary"} />
+                    <p className={`text text_type_main-default ml-2`} style={ ! /^\/profile/.test(pathname) ? { color: '#8585AD' } : null}>{store.user.userData.name ? store.user.userData.name : 'Личный кабинет'} </p>
                 </NavLink>
             </nav>
         </header>
