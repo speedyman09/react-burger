@@ -1,4 +1,12 @@
-import { registerRequest, loginRequest, logoutRequest, resetRequest, editRequest, resetPasswordRequest } from "./utils";
+import {
+    registerRequest,
+    loginRequest,
+    logoutRequest,
+    resetRequest,
+    editRequest,
+    resetPasswordRequest,
+    BASE_URL
+} from "./utils";
 import { setCookie, deleteCookie } from "./cookie";
 import { setUser, setLogoutUser, setUpdateUser, setUpdateUserRequest, setUpdateUserError, setResetRequest, setResetConfirmed, setResetError, setChangePasswordRequest, setChangePasswordConfirmed, setChangePasswordError, setUserRequest, setUserError, setLogoutRequest, setLogoutError } from "../services/reducers/userReducer";
 import { refreshTokenRequest } from "./utils";
@@ -144,6 +152,13 @@ export const onUpdateUser = (user) => {
             })
             .finally(() => {
                 dispatch(setUpdateUserRequest(false))
+                refreshTokenRequest()
+                    .then((refreshData) => {
+                        setCookie("accessToken", refreshData.accessToken.split('Bearer ')[1]);
+                        setCookie("refreshToken", refreshData.refreshToken);
             })
+
+            })
+
     };
 };
