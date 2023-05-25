@@ -1,6 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { BASE_URL } from '../../utils/utils';
-import { checkResponse } from '../../utils/api';
+import { createSlice } from '@reduxjs/toolkit'
 
 const dataState = {
     ingredients: [],
@@ -11,26 +9,14 @@ const dataState = {
     ingredientDetails: {
         ingredient: null
     },
+    wsOpen: null,
+    wsClose: null,
+    wsConnectionStatus: true,
+    wsError: null,
+    fetchError: null,
+    fetchRequest: false,
+    orders: null
 };
-
-export const getAllIngredients = createAsyncThunk(
-    'data',
-    async function (_, { dispatch }) {
-        dispatch(setIngredientsRequest(true))
-        return fetch(`${BASE_URL}/ingredients`)
-            .then(checkResponse)
-            .then((data) => {
-                dispatch(setIngredients(data))
-            })
-            .catch((error) => {
-                dispatch(loadDataFail(error))
-                console.warn(error)
-            })
-            .finally(() => {
-                dispatch(setIngredientsRequest(false))
-            })
-    }
-);
 
 export const dataSlice = createSlice({
     name: 'data',
@@ -54,8 +40,38 @@ export const dataSlice = createSlice({
         toggleIngredientsTab: (state, action) => {
             state.ingredientsCurrentTab = action.payload;
         },
+        setWebsocketOpen: (state, action) => {
+            state.wsOpen = action.payload;
+            state.wsError = null;
+        },
+        setWebsocketClose: (state, action) => {
+            state.wsClose = action.payload;
+            state.wsError = null;
+        },
+        setWebsocketConnection: (state, action) => {
+            state.wsConnectionStatus = true;
+        },
+        setWebsocketOffline: (state, action) => {
+            state.wsConnectionStatus = false;
+            state.orders = null;
+        },
+        setWebsocketConnectionError: (state, action) => {
+            state.wsError = action.payload;
+        },
+        setWebsocketGetOrders: (state, action) => {
+            state.orders = action.payload;
+        },
+        setFetchOrder: (state, action) => {
+            state.orders = action.payload;
+        },
+        setFetchOrderRequest: (state, action) => {
+            state.fetchRequest = action.payload;
+        },
+        setFetchOrderError: (state, action) => {
+            state.fetchError = action.payload;
+        }
     },
 })
 
-export const { setIngredients, setIngredientsRequest, loadDataFail, getCardData, toggleIngredientsTab } = dataSlice.actions
+export const { setIngredients, setIngredientsRequest, loadDataFail, getCardData, toggleIngredientsTab, setWebsocketOpen, setWebsocketClose, setWebsocketConnection, setWebsocketOffline, setWebsocketConnectionError, setWebsocketGetOrders, setWebsocketGetUserOrders, setFetchOrder, setFetchOrderRequest, setFetchOrderError } = dataSlice.actions
 export const dataReducer = dataSlice.reducer

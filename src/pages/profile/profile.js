@@ -1,16 +1,32 @@
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { Link, NavLink, Route, Switch, useLocation } from 'react-router-dom';
 import profileStyle from './profile.module.css';
 import { useRouteMatch } from 'react-router-dom';
 import { ProfileData } from '../../components/profile-data/profile-data';
 import { useSelector } from 'react-redux';
-import { onLogout } from '../../utils/api';
+import { onLogout } from '../../services/actions/actions';
 import { useDispatch } from 'react-redux';
 import Spinner from '../spinner/spinner';
+import { OrdersFeed } from '../../components/orders-feed/orders-feed';
+import { useEffect } from 'react';
+import { setWebsocketConnection, setWebsocketOffline } from '../../services/reducers/dataReducer';
+import { BASE_WSS } from '../../utils/utils';
+import { getCookie } from '../../utils/cookie';
 
 export const Profile = () => {
-    const logoutRequest = useSelector(store => store.user.logoutRequest)
+
+    const logoutRequest = useSelector(store => store.user.logoutRequest);
+    const orders = useSelector(store => store.data?.orders)
     const dispatch = useDispatch();
     const { url } = useRouteMatch();
+    const location = useLocation();
+    const accessToken = getCookie('accessToken');
+
+    useEffect(() => {
+        dispatch(setWebsocketConnection(`${BASE_WSS}/orders?token=${accessToken}`))
+        return () => {
+            dispatch(setWebsocketOffline())
+        }
+    }, [location.pathname])
 
     const onLogoutHandler = (e) => {
         e.preventDefault();
@@ -40,13 +56,39 @@ export const Profile = () => {
                     Выход
                 </button>
 
-                <p className={`mt-20 text text_color_inactive text_type_main-default ${profileStyle.text}`}>В этом разделе вы можете изменить свои персональные данные
-                </p>
+                {
+                    location.pathname === `${url}` &&
+                    <p className={`mt-20 text text_color_inactive text_type_main-default ${profileStyle.text}`}>В этом разделе вы можете изменить свои персональные данные
+                    </p>
+                }
+
+                {
+                    location.pathname.startsWith(`${url}/orders`) &&
+                    <p className={`mt-20 text text_color_inactive text_type_main-default ${profileStyle.text}`}>В этом разделе вы можете просмотреть свою историю заказов
+                    </p>
+                }
+
             </nav >
-            <article className={profileStyle.content} >
+            <article className={`mt-10 ${profileStyle.content}`}>
                 <Switch>
                     <Route path={`${url}`} exact>
                         <ProfileData />
+                    </Route>
+                    <Route path={`${url}/orders`} exact>
+                        {!orders ?
+                            <Spinner />
+                            :
+                            orders && orders.orders.length === 0
+                                ?
+                                <>
+                                    <p className={`mt-20 text text_color_inactive text_type_main-large ${profileStyle.textNoOrders}`}>Нет заказов</p>
+                                    <Link to={`/`} className={`mt-10 text text_type_main-medium ${profileStyle.createOrder}`} >
+                                        Создать первый заказ
+                                    </Link>
+                                </>
+                                :
+                                <OrdersFeed className={`mt-10 ${profileStyle.orders}`} />
+                        }
                     </Route>
                 </Switch>
             </article >
