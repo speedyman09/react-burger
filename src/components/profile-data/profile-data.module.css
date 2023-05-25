@@ -1,0 +1,13 @@
+.profileData {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.profileButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}

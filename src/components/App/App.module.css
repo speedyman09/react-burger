@@ -1,16 +1,19 @@
-.app {
-  margin: 0;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.body {
+  background-color: #131316;
+  height: 100vh;
 }
 
-.main {
-  margin: 0 auto;
-  width: 1240px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+body::-webkit-scrollbar {
+  width: 8px;
+  /* ширина scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: #2F2F37;
+  /* цвет дорожки */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  /* цвет плашки */
 }
