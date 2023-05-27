@@ -2,6 +2,7 @@ export const socketMiddleware = (wsActions) => {
     return store => {
         let socket = null;
         let url = '';
+        let isClosedByUser = false;
 
         return next => action => {
             const { type, payload } = action;
@@ -11,6 +12,15 @@ export const socketMiddleware = (wsActions) => {
             if (type === wsConnection) {
                 url = payload;
                 socket = new WebSocket(`${url}`);
+                isClosedByUser = false;
+            }
+
+            if (type === wsClose) {
+                if (socket) {
+                    isClosedByUser = true;
+                    socket.close();
+                    socket = null;
+                }
             }
 
             if (type === wsOffline) {
@@ -22,7 +32,7 @@ export const socketMiddleware = (wsActions) => {
                     dispatch({ type: wsOpen, payload: true });
                 };
                 socket.onerror = event => {
-                    dispatch({ type: wsError, payload: event });
+                    dispatch({ type: wsError, payload: event.message });
                 };
                 socket.onmessage = event => {
                     const { data } = event;
@@ -31,10 +41,13 @@ export const socketMiddleware = (wsActions) => {
                 };
                 socket.onclose = event => {
                     dispatch({ type: wsClose, payload: event.code.toString() });
+                    if (!isClosedByUser) {
+                        socket = new WebSocket(`${url}`);
+                    }
                 };
             }
 
             next(action);
         };
     };
-}; 
+};

@@ -9,12 +9,13 @@ export const OrdersFeed = () => {
     const location = useLocation();
     const ingredients = useSelector(store => store.data?.ingredients);
     const orders = useSelector(store => store.data?.orders);
-
+    const sortedOrders = orders && [...orders.orders].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    console.log(sortedOrders)
     if (orders && ingredients) {
         return (
             <ul className={` ${ordersFeedStyles.list}`}>
                 {
-                    orders?.orders?.map(order => (
+                    sortedOrders.map(order => (
                         <Link className={`text text_type_main-small ${ordersFeedStyles.order__link}`} key={order.number} to={{
                             pathname: location.pathname.startsWith('/profile') ? `/profile/orders/${order.number}` : `/feed/${order.number}`,
                             state: { background: location }

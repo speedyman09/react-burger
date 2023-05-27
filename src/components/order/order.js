@@ -15,8 +15,6 @@ export const Order = ({ orderInfo }) => {
         const arrOfIngredientsPrice = orderInfo?.ingredients?.map(ingredient => {
             if (ingredient !== null) {
                 return ingredients?.find(item => item?._id === ingredient)?.price
-            } else {
-                return 0
             }
         })
         return arrOfIngredientsPrice.reduce((acc, item) => { return acc += item }, 0)
