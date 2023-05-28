@@ -15,16 +15,18 @@ export const socketMiddleware = (wsActions) => {
                 isClosedByUser = false;
             }
 
-            if (type === wsClose) {
+            if (type === wsOffline) {
                 if (socket) {
-                    isClosedByUser = true;
                     socket.close();
                     socket = null;
+                    isClosedByUser = true;
                 }
             }
-
-            if (type === wsOffline) {
-                socket = null;
+            if (type === wsClose) {
+                if (socket) {
+                    socket = null
+                    isClosedByUser = false;
+                }
             }
 
             if (socket) {
