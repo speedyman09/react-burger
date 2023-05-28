@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import appStyles from './app.module.css';
+import appStyles from './App.module.css';
 import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
 import OrderBrief from '../order-brief/order-brief';
