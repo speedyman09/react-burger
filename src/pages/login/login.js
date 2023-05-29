@@ -1,21 +1,32 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import loginStyles from './login.module.css';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import Spinner from '../spinner/spinner';
 import { useForm } from '../../hooks/useForm';
+import { useEffect } from 'react';
+import { setResetUserError } from '../../services/reducers/userReducer';
 
 export const Login = () => {
 
+    const history = useHistory();
+    const dispatch = useDispatch();
     const isAuthChecked = useSelector(store => store.user.isAuthChecked);
     const userRequest = useSelector(store => store.user.userRequest)
     const user = useSelector(store => store.user.userData.name);
-    const { state } = useLocation()
-
+    const userError = useSelector(store => store.user.userError);
+    const { state } = useLocation();
+    const location = useLocation();
     const userData = {
         email: '',
         password: ''
     }
+
+    useEffect(() => {
+        return history.listen((location) => {
+            dispatch(setResetUserError())
+        })
+    }, [history])
 
     const { values, handleChange, handleLogin } = useForm(userData);
 
@@ -53,6 +64,13 @@ export const Login = () => {
                     value={values.password}
                     name={'password'}
                 />
+
+                {userError && (<p className={`mb-4 text text_type_main-default ${loginStyles.textError}`}>{userError.message === 'email or password are incorrect' ? 'Неправильный логин или пароль' : 'Сессия истекла'} </p>)
+                }
+
+                {!user && location.state?.from.pathname.startsWith('/profile/orders') && (<p className={`mb-4 text text_type_main-default ${loginStyles.textError}`}>Войдите чтобы посмотреть заказы пользователя</p>)
+                }
+
                 <Button
                     htmlType='submit'
                     type="primary"

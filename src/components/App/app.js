@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import appStyles from './App.module.css';
 import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
+import OrderBrief from '../order-brief/order-brief';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { getAllIngredients } from '../../services/reducers/dataReducer';
+import { getAllIngredients } from '../../services/actions/actions';
 import { Constructor } from '../../pages/constructor/constructor';
 import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { Login } from '../../pages/login/login';
@@ -16,7 +16,9 @@ import { Profile } from '../../pages/profile/profile';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { NotFound } from '../../pages/not-found/not-found';
 import Spinner from '../../pages/spinner/spinner';
-import { checkAuth } from '../../services/reducers/userReducer';
+import { checkAuth } from '../../services/actions/actions';
+import { Feed } from '../../pages/feed/feed';
+import OrderDetails from '../order-details/order-details';
 
 function App() {
 
@@ -46,7 +48,10 @@ function App() {
                 <Route path='/' exact>
                     <Constructor />
                 </Route>
-                <ProtectedRoute path='/profile'>
+                <ProtectedRoute path='/profile/orders/:id'>
+                    <OrderDetails />
+                </ProtectedRoute>
+                <ProtectedRoute path='/profile' >
                     <Profile />
                 </ProtectedRoute>
                 <Route path='/login' exact>
@@ -64,6 +69,12 @@ function App() {
                 <Route path='/ingredients/:id' >
                     {state.data.ingredients.length && <IngredientDetails ingredients={state.data.ingredients} />}
                 </Route>
+                <Route path='/feed/:id' >
+                    <OrderDetails />
+                </Route>
+                <Route path='/feed' >
+                    <Feed />
+                </Route>
                 <Route path="*">
                     <NotFound />
                 </Route>
@@ -76,14 +87,24 @@ function App() {
                             {state.data.ingredients.length && <IngredientDetails />}
                         </Modal>
                     </Route >
+                    <Route path='/feed/:id' >
+                        <Modal onClose={handleCloseModals} >
+                            <OrderDetails />
+                        </Modal>
+                    </Route >
                     <ProtectedRoute path='/order'>
                         {state.burgerConstructor.orderNumber &&
-                            (<>
+                            (
                                 <Modal onClose={handleCloseModals} >
-                                    <OrderDetails />
+                                    <OrderBrief />
                                 </Modal>
-                            </>)
+                            )
                         }
+                    </ProtectedRoute>
+                    <ProtectedRoute path='/profile/orders/:id'>
+                        <Modal onClose={handleCloseModals} >
+                            <OrderDetails />
+                        </Modal>
                     </ProtectedRoute>
                 </>
                 )
